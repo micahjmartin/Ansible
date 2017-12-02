@@ -1,0 +1,23 @@
+smtpd_banner = $mydomain mail server
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+
+smtpd_sasl_auth_enable = no
+smtpd_sasl_path = private/auth
+smtpd_sasl_type = dovecot
+smtpd_recipient_restrictions = permit_mynetworks permit_sasl_authenticated reject_unauth_destination
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+
+myhostname = {{ ansible_hostname }}
+mydomain = {{ ansible_fqdn }}
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+mydestination = $mydomain, $myhostname, localhost, {{ ip_address }}
+relayhost =
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
