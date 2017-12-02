@@ -1,0 +1,23 @@
+- name: Installing Postfix
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - 'postfix'
+    - 'mailutils'
+
+- name: Set mailname
+  template:
+    src: ../templates/mailname.j2
+    dest: /etc/mailname
+  
+- name: Configure Postfix
+  template:
+    src: ../templates/main.cf.j2
+    dest: /etc/postfix/main.cf
+
+- name: Restart postfix
+  service:
+    name: postfix
+    state: restarted
+    enabled: yes

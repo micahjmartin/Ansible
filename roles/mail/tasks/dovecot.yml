@@ -1,0 +1,15 @@
+- name: Installing Dovecot
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - 'dovecot-core'
+    - 'dovecot-imapd'
+
+- name: Add inject user
+  user:
+    name: "injects"
+    groups: "mail, sudo"
+    append: yes
+    password: "{{ default_password }}"
+
