@@ -15,8 +15,9 @@
 
 param (
     [string]$domainName = "whiteteam.ists",
-    [string]$newUser = "whiteteam",
-    [string]$defaultPassword = "Changeme-2018"
+	[string]$newUser = "whiteteam",
+	[string]$defaultPassword = "Changeme-2018",
+	[string]$ipAddr = ((ipconfig | findstr 10.\.)[0]).Split()[-1]
 )
 
 ##########################################
@@ -26,16 +27,30 @@ param (
 ##########################################
 
 function Install-hMail(){
-    Write-Host "[*] Installing hMailServer"
+    Write-Host "[*] Installing hMailServer..."
     Try
     {
         $url = "https://www.hmailserver.com/download_file?downloadid=256"
         Invoke-WebRequest -Uri $url -OutFile "hMailServer.exe"
         .\hMailServer.exe /verysilent
+        Start-Sleep -s 30
     }
     Catch
     {
         Write-Error "[!] Install failed!"
+        Throw
+    }
+}
+
+function Add-DomainAlias($domain, $alias) {
+    Try {
+        $a = $domain.DomainAliases.Add()
+        $a.AliasName = $alias
+        $a.Save()
+    } 
+    Catch
+    {
+        Write-Host "[+] $alias alias exists"
     }
 }
 
@@ -48,7 +63,15 @@ Try
 Catch
 {
     Install-hMail
-    $hMailCom = New-Object -ComObject 'hMailServer.Application'
+    Try
+    {
+        $hMailCom = New-Object -ComObject 'hMailServer.Application'
+    }
+    Catch
+    {
+        Write-Error "[!] Cannot connect hMailServer. Make sure service is installed and re-run script"
+        Throw
+    }
 }
 
 # Print info
@@ -87,6 +110,9 @@ Try
     # Enable the domain
     $domain.Active = $true
     $domain.Save()
+	# Add an alias for the IP address and localhost
+    Add-DomainAlias $domain $ipAddr
+    Add-DomainAlias $domain "localhost"
     Write-Host "[+] Domain Exists. Moving on" 
 }
 Catch
@@ -98,10 +124,14 @@ Catch
     # Enable the domain
     $domain.Active = $true
     $domain.Save()
+    # Add an alias for the IP address and localhost
+    Add-DomainAlias $domain $ipAddr
+    Add-DomainAlias $domain "localhost"
     Write-Host "[*] Domain does not exists. Creating domain"
 }
 
 # Get the accounts of the domain
+$accounts = $domain.Accounts
 Try
 {
     $account = $accounts.ItemByAddress("$newUser@$domainName")
@@ -156,4 +186,3 @@ $log.LogTCPIP = $true
 $log.MaskPasswordsInLog = $false
 
 Write-Host "[+] Complete. hMail installed"
-
