@@ -1,0 +1,12 @@
+- name: Installing Jenkins
+  pkgng:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - 'jenkins-lts'
+
+- name: Starting Jenkins
+  service:
+    name: jenkins
+    state: restarted
+    enabled: yes
