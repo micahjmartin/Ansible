@@ -1,2 +1,10 @@
 ---
 - include_tasks: install.yml
+- include_tasks: configure.yml
+
+- name: Starting Jenkins
+  service:
+    name: jenkins
+    state: restarted
+    enabled: yes
+

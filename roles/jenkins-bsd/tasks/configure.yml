@@ -1,0 +1,31 @@
+---
+- name: Configuring Jenkins
+  file:
+    path: "/usr/local/jenkins/users/admin"
+    state: directory
+
+- name: "Adding User: Scoring"
+  copy:
+    src: "../files/users/scoring"
+    dest: "/usr/local/jenkins/users"
+
+- name: "Configuring port"
+  replace:
+    path: /usr/local/etc/rc.d/jenkins
+    regexp: '(--httpPort)=\d+'
+    replace: '\1=8080'
+  
+- name: "Configuring web url"
+  replace:
+    path: /usr/local/etc/rc.d/jenkins
+    regexp: '(--prefix=).*"'
+    replace: '\1"'
+
+- name: "Setting permissions"
+  file:
+    path: /usr/local/jenkins
+    state: directory
+    owner: jenkins
+    group: jenkins
+    recurse: yes
+
