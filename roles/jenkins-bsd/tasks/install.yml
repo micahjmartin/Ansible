@@ -5,6 +5,16 @@
   with_items:
     - 'jenkins-lts'
 
+- name: "Configuring Jenkins"
+  file:
+    path: "/usr/local/jenkins/secrets/initialAdminPassword"
+    state: absent
+
+- name: "Adding User: Scoring"
+  copy:
+    src: "../files/users"
+    dst: "/usr/local/jenkins/"
+
 - name: Starting Jenkins
   service:
     name: jenkins
