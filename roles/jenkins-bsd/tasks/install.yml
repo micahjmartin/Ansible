@@ -5,3 +5,11 @@
   with_items:
     - 'jenkins-lts'
 
+- name: Starting Jenkins
+  service:
+    name: jenkins
+    state: started
+
+- name: "Waiting for service..."
+  pause:
+    seconds: 3

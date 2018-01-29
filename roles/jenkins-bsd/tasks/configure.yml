@@ -1,13 +1,18 @@
 ---
+- name: Stopping Jenkins
+  service:
+    name: jenkins
+    state: stopped
+
 - name: Configuring Jenkins
   file:
-    path: "/usr/local/jenkins/users/admin"
+    path: "{{ jenkins_install_dir }}/users/admin"
     state: directory
 
 - name: "Adding User: Scoring"
   copy:
     src: "../files/users/scoring"
-    dest: "/usr/local/jenkins/users"
+    dest: "{{ jenkins_install_dir }}/users"
 
 - name: "Configuring port"
   replace:
@@ -23,9 +28,21 @@
 
 - name: "Setting permissions"
   file:
-    path: /usr/local/jenkins
+    path: "{{ jenkins_install_dir }}"
     state: directory
-    owner: jenkins
-    group: jenkins
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
     recurse: yes
+
+- name: Bypassing Install
+  lineinfile:
+    path: "{{ jenkins_install_dir }}/jenkins.install.InstallUtil.lastExecVersion"
+    line: "2.89.2"
+    create: yes
+    state: present
+
+- name: Starting Jenkins
+  service:
+    name: jenkins
+    state: started
 

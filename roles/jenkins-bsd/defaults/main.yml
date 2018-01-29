@@ -1,0 +1,5 @@
+---
+
+jenkins_port: 8080
+jenkins_user: jenkins
+jenkins_install_dir: /usr/local/jenkins
