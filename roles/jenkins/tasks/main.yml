@@ -2,7 +2,7 @@
 
 - include: "{{ jenkins_install_via }}/install.yml"
 
-- include: "configure-jenkins.yml"
+  #- include: "configure-jenkins.yml"
 
 - include: "{{ jenkins_install_via }}/restart.yml"
 - include: "wait-for-start.yml"

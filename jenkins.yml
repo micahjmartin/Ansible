@@ -1,10 +1,11 @@
 - hosts: jenkins
   vars:
     jenkins_version: "2.89.3"
-    jenkins_port: 80
     jenkins_home: /var/lib/jenkins
     jenkins_install_via: "yum"
     jenkins_source_config_xml: "../files/config.xml"
+    jenkins_url: "http://0.0.0.0"
+    jenkins_java_opts: "--httpListenAddress=0.0.0.0 --httpPort=80"
     jenkins_plugins:
       - git 
   roles:
