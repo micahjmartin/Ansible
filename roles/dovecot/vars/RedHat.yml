@@ -2,4 +2,4 @@
 dovecot_packages:
   - dovecot
 
-doveco_pam_file: "dovecot"
+dovecot_pam_file: "dovecot"
