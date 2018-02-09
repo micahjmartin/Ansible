@@ -1,0 +1,23 @@
+- name: Load variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - "default.yml"
+
+- name: Installing Dovecot
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items: "{{ dovecot_packages }}"
+
+- name: Configure Dovecot
+  template:
+    src: dovecot.j2
+    dest: /etc/dovecot/dovecot.conf
+
+- name: Restart Dovecot
+  service:
+    name: dovecot
+    state: restarted
+    enabled: yes

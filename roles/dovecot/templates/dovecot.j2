@@ -1,0 +1,39 @@
+mail_privileged_group = mail
+mail_location = mbox:~/mail:INBOX=/var/mail/%u
+auth_mechanisms = plain login
+auth_debug = yes
+auth_verbose = yes
+auth_username_format = %n
+
+userdb {
+    driver = passwd
+}
+passdb {
+    args = {{ dovecot_pam_file }}
+    driver = pam
+}
+
+protocols = imap
+protocol imap {
+}
+
+{% if dovecot_postfix %}
+service auth {
+    unix_listener /var/spool/postfix/private/auth {
+	  group = {{ postfix_group }}
+	  mode = 0660
+	  user = postfix
+    }
+}
+{% endif %}
+
+{% if dovecot_ssl %}
+disable_plaintext_auth = yes
+ssl = yes
+ssl_cert = <{{ dovecot_cert }}
+ssl_key = <{{ dovecot_key }}
+ssl_verify_client_cert = yes
+{% else %}
+ssl = no
+disable_plaintext_auth = no
+{% endif %}

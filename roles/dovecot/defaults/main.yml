@@ -1,0 +1,9 @@
+---
+
+dovecot_ssl: no
+dovecot_cert: "/etc/none"
+dovecot_key: "/etc/none"
+
+dovecot_postfix: yes
+postfix_group: postfix
+

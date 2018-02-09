@@ -1,0 +1,5 @@
+---
+dovecot_packages:
+  - dovecot
+
+doveco_pam_file: "dovecot"

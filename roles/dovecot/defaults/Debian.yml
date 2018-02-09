@@ -1,0 +1,6 @@
+---
+dovecot_packages:
+  - dovecot-imapd
+  - dovecot-core
+
+dovecot_pam_file: "%s"

@@ -1,3 +1,0 @@
-- hosts: freebsd
-  roles:
-    - jenkins-bsd
