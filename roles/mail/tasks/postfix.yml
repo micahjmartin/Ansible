@@ -1,7 +1,0 @@
-- name: Installing Postfix
-  package:
-    name: '{{ item }}'
-    state: latest
-  with_items:
-    - 'postfix'
-    - 'mailutils'

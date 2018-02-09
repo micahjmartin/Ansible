@@ -1,0 +1,10 @@
+---
+postfix_mydomain: "example.com"
+postfix_myhostname: mail
+
+# Settings if you enable SSL in postfix
+postfix_ssl: no
+postfix_cert: "/etc/none"
+postfix_cert_bundle: "/etc/none"
+postfix_key: "/etc/none"
+postfix_auth: yes
