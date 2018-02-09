@@ -9,7 +9,7 @@
   copy:
     content: "{{ postfix_mydomain }}"
     dest: /etc/mailname
-  
+
 - name: Configure Postfix
   template:
     src: main.j2

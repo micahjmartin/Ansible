@@ -2,3 +2,4 @@
 - hosts: mail
   roles:
     - dovecot
+    - postfix
