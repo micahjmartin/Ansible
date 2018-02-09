@@ -1,8 +1,4 @@
 ---
-- hosts: all
-  sudo: yes
-  gather_facts: false
+- hosts: mail
   roles:
-    - common
-    - mail
-    - mail-configure
+    - dovecot
