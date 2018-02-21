@@ -1,5 +1,4 @@
 ---
-- hosts: mail
+- hosts: docker
   roles:
-    - dovecot
-    - postfix
+    - docker

@@ -1,0 +1,14 @@
+---
+- name: Install dependencies
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - docker
+    - docker-common
+
+- name: Start docker server
+  service:
+    name: docker
+    state: started
+

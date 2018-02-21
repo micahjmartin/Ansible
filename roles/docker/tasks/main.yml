@@ -1,0 +1,3 @@
+---
+- name: Install for Redhat
+  include_tasks: rh.yml

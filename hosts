@@ -3,8 +3,14 @@ ansible_ssh_user=root
 ansible_ssh_pass=cseclabs
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
-[mail]
-10.80.100.2
+[docker]
+192.168.177.130
+
+[docker:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=toor
+
+
 
 [freebsd]
 10.80.100.10 
